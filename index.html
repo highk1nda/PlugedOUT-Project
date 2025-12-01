@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlugOUT – Gamer Minimal UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      /* background: #004f03; */
+      color: #eaeaea;
+      font-family: 'Montserrat', sans-serif !important;
+      font-weight: 400;
+
+    }
+
+    /*FLOATING FROM TOP Header */
+    header {
+      position: fixed;
+      top: 39px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      width: 38%;
+      padding: 28px 34px;
+
+      font-family: 'Montserrat', sans-serif;
+      /* FONT */
+
+      background: rgb(0 0 0 / 53%);
+      backdrop-filter: blur(13px);
+
+      border-radius: 18px;
+      transition: transform 0.15s ease-out;
+    }
+
+    header h2 {
+      margin: 0;
+      font-weight: 700;
+      /* Montserrat 700 */
+    }
+
+    /* MENU (BAR on TOP) */
+    .menu {
+      display: flex;
+      gap: 18px;
+      font-size: 25px;
+      font-family: 'Montserrat', sans-serif;
+      /* FONT thing */
+      font-weight: 700;
+      /* Bold */
+    }
+
+    .menu span {
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .menu span:hover {
+      color: #c4ffd3;
+      /* text-shadow: 0 0 3px #005f15; */
+    }
+
+
+    /* Sections */
+    section {
+      padding: 70px 10%;
+      /* background: #004f03; */
+      ;
+      /* border-radius: 26px; */
+    }
+
+    /* FULLSCREEN HERO */
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: floralwhite;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+    }
+
+    /* Lottie covers the whole screen */
+    #plug-lottie {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: auto; /* allows to reg clicks keyframe for js script */
+    }
+
+
+    .team-member {
+      background: none;
+      /* border: 1px solid rgba(0, 255, 170, 0.25); */
+      padding: 16px;
+      /* border-radius: 14px; */
+      text-align: center;
+    }
+
+    .team-member img {
+      aspect-ratio: 1 / 1;
+      border-radius: 50%; /* CIRCLE the imgs*/
+      object-fit: cover;
+      background: #1a1a1a;
+      border: 2px solid rgba(0, 255, 170, 0.3);
+      width: 80%; /* smaller image relative to card */
+      margin: 0 auto;
+      display: block;
+      max-width: 200px;
+    max-height: 200px;
+    }
+
+    .team-member-header {
+      font-size: 28px !important; /* smaller title !!!!!!!!!!!TO BE CHANGED!!!!!!!!!!!*/
+      margin-bottom: 20px;
+    }
+
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .activity-box {
+      background: #111;
+      /* border: 1px solid rgba(0, 255, 170, 0.35); */
+      border-radius: 16px;
+      padding: 16px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 80%;
+      max-height: 390px; /* limit max height !!!!!!!!!TO BE CHANGED!!!!!!!! */
+    }
+
+    .activity-box img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #222;
+      max-height: 230px;
+      /* border: 2px solid rgba(0, 255, 170, 0.3); */
+    }
+
+    .team-grid {
+      display: flex;
+      gap: 20px; /* reduce spacing between cards */
+      justify-content: center;
+    }
+
+    .team-member {
+      width: 22% !important;
+      font-size: 14px;
+    }
+
+    .team-section {
+      background: darkslategrey;
+      padding: 40px 10% !important; /* smaller top/bottom */
+    }
+
+    /* Activity Section Styling */
+    .activity-section {
+      color: #eaeaea;
+      /* background: #003b02; */
+    }
+
+    /* 16:9 Video Container RESPONSIVE */
+    .video-preview {
+      width: 70%;
+      aspect-ratio: 16 / 9;
+      border-radius: 18px;
+      background: #141414;
+      border: 2px solid rgba(0, 255, 170, 0.15);
+      box-shadow: 0 0 22px rgba(0, 255, 170, 0.1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Hover effect */
+    .video-preview:hover {
+      transform: scale(1.01);
+      box-shadow: 0 0 30px rgba(0, 255, 170, 0.2);
+    }
+
+    /* text overlay */
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #bdfce1;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    /* PDF link inder video*/
+    .pdf-link {
+      margin-top: 18px;
+      font-size: 16px;
+      color: #d6fff2;
+    }
+
+    .main-footer {
+      width: 100%;
+      background: #000;
+      color: #c4ffc9; /* soft green text */
+      text-align: center;
+      padding: 40px 0;
+      font-size: 18px;
+
+      border-top: 1px solid rgba(0, 255, 170, 0.2);
+      box-shadow: 0 -4px 12px rgba(0, 255, 170, 0.1);
+    }
+
+    /* 16:9 Video Container */
+    .video-preview {
+      width: 70%;
+      aspect-ratio: 16 / 9;
+      border-radius: 18px;
+      background: #000;
+      border: 2px solid rgba(0, 255, 170, 0.25);
+      box-shadow: 0 0 22px rgba(0, 255, 170, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Video takes full container */
+    .activity-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* NEEDED FOR SCALING */
+      border-radius: 18px;
+    }
+
+    /* PDF button */
+    .pdf-button {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 12px 26px;
+      font-size: 17px;
+      font-weight: 600;
+      color: #c4ffd3;
+      background: #022e09;
+      border: 1px solid rgba(0, 255, 170, 0.35);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: 0.25s ease;
+      box-shadow: 0 0 14px rgba(0, 255, 170, 0.15);
+    }
+
+    /* Hover effect */
+    .pdf-button:hover {
+      background: #035514;
+      border-color: rgba(0, 255, 170, 0.5);
+      box-shadow: 0 0 24px rgba(0, 255, 170, 0.25);
+      color: #eafff1;
+    }
+
+    .activity-wrapper {
+      background:
+        linear-gradient(217deg, rgb(101 255 0), rgb(209 117 117 / 0%) 50.71%),
+        linear-gradient(127deg, rgb(36 0 255), rgba(255, 255, 255, 0) 70.71%),
+        linear-gradient(336deg, rgb(255 0 0 / 80%), rgba(255, 255, 255, 0) 70.71%);
+      background-size: 400% 400%;
+      animation: gradient 5s ease infinite;
+
+      width: 100%;
+      min-height: 100vh;
+      height: auto;
+      backdrop-filter: blur(3px);
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+
+    .activity-section,
+    .activity-more {
+      background: transparent;
+      padding-bottom: 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h2>PlugOUT</h2>
+    <div class="menu">
+      <span>Team</span>
+      <span>Module</span>
+      <span>Activity</span>
+      <span>1</span>
+      <span>2</span>
+      <span>3</span>
+      <span>4</span>
+      <span>5</span>
+    </div>
+  </header>
+
+  <!-- FULLSCREEN HERO LOTTIE -->
+  <section class="hero">
+    <div id="plug-lottie"></div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team-section">
+    <h3 class="team-member-header">Team Members</h3>
+
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="assets/doax.jpg" />
+        <p>Name & Role</p>
+      </div>
+      <div class="team-member">
+        <img src="assets/dexter1.jpg" />
+        <p>Name & Role</p>
+      </div>
+      <div class="team-member">
+        <img src="assets/cat3.jpg" />
+        <p>Name & Role</p>
+      </div>
+      <div class="team-member">
+        <img src="assets/cat1.jpg" />
+        <p>Name & Role</p>
+      </div>
+      <div class="team-member">
+        <img src="assets/cat2.jpg" />
+        <p>Name & Role</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHARED BACKGROUND FOR ACTIVITY 1–6 -->
+  <div class="activity-wrapper">
+
+    <!-- ACTIVITY 1 -->
+    <section class="activity-section" style="place-items: center;">
+      <h3>Activity 1: Problem Definition</h3>
+
+      <!-- VIDEO PLAYER BOX -->
+      <div class="video-preview">
+        <video controls class="activity-video">
+          <source src="assets/stok_vid.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+      </div>
+
+      <!-- PDF BUTTON -->
+      <a href="assets/problem-definition.pdf" class="pdf-button" download>
+        Problem Definition PDF
+      </a>
+    </section>
+
+
+    <!-- ACTIVITY 2–6 -->
+    <section class="activity-more">
+      <h3>Activities 2–6</h3>
+
+      <div class="activities-grid">
+
+        <div class="activity-box">
+          <h4>Activity 2</h4>
+          <p>Description goes here...</p>
+          <img src="assets/tree.jpg" />
+          <p><strong>Report PDF:</strong> need-finding.pdf</p>
+        </div>
+
+        <div class="activity-box">
+          <h4>Activity 3</h4>
+          <p>Description goes here...</p>
+          <img src="assets/tree.jpg" />
+          <p><strong>Report PDF:</strong> need-finding.pdf</p>
+        </div>
+
+        <div class="activity-box">
+          <h4>Activity 4</h4>
+          <p>Description goes here...</p>
+          <img src="assets/tree.jpg" />
+          <p><strong>Report PDF:</strong> need-finding.pdf</p>
+        </div>
+
+        <div class="activity-box">
+          <h4>Activity 5</h4>
+          <p>Description goes here...</p>
+          <img src="assets/tree.jpg" />
+          <p><strong>Report PDF:</strong> need-finding.pdf</p>
+        </div>
+
+        <div class="activity-box">
+          <h4>Activity 6</h4>
+          <p>Description goes here...</p>
+          <img src="assets/tree.jpg" />
+          <p><strong>Report PDF:</strong> need-finding.pdf</p>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="main-footer">
+    Project Title and other stuff 2025
+  </footer>
+
+
+
+  <!-- LOTTIE SCRIPT -->
+  <script>
+    const anim = lottie.loadAnimation({
+      container: document.getElementById('plug-lottie'),
+      renderer: 'svg',
+      loop: false,
+      autoplay: true,
+      path: 'assets/lottie7.json'
+    });
+
+    anim.addEventListener("data_ready", () => {
+      // a way to get values
+      const totalFrames = anim.totalFrames || anim.getDuration(true) || 0;
+      const totalSeconds = (typeof anim.getDuration === 'function')
+        ? anim.getDuration(false)  // false -> return seconds
+        : (totalFrames / (anim.frameRate || 30)); // fallback
+      anim.addEventListener("complete", () => {
+        console.log("Lottie finished. Auto-scroll in 1s...");
+
+        setTimeout(() => {
+          const nextSection = document.querySelector(".team-section");
+          if (nextSection) {
+            nextSection.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 1000); // basically 1 second delay
+      });
+
+      console.log("lottie: totalFrames =", totalFrames);
+      console.log("lottie: totalSeconds =", totalSeconds);
+      console.log("lottie: frameRate (maybe undefined) =", anim.frameRate);
+
+      // compute pause frame from seconds -> frame number
+      const targetSeconds = 1.86;
+      const pauseFrame = Math.round(targetSeconds * (totalFrames / totalSeconds));
+      console.log("Pause at seconds:", targetSeconds, "=> pauseFrame:", pauseFrame);
+
+      // CAUTION --- if computation failed, leave it and show error in the console
+      if (!isFinite(pauseFrame) || pauseFrame <= 0) {
+        console.error("Pause frame calculation failed. Check anim.totalFrames and getDuration()");
+        return;
+      }
+
+      // pause when we reach or pass the pauseFrame
+      function pauseAtFrame() {
+        if (anim.currentFrame >= pauseFrame) {
+          anim.pause();
+          window.hasPaused = true;
+          anim.removeEventListener("enterFrame", pauseAtFrame);  //  stops future auto-pauses
+          console.log("Animation paused once and listener removed");
+        }
+      }
+
+      anim.addEventListener("enterFrame", pauseAtFrame);
+
+
+      // only continue when user clicks the animation area (WHOLE HERO section)
+      const container = document.getElementById("plug-lottie");
+      container.addEventListener("click", (e) => {
+        if (window.hasPaused) {
+          anim.play();
+          window.hasPaused = false;
+          console.log("Animation resumed by click");
+        } else {
+          console.log("Clicked but animation wasn't paused");
+        }
+        // stop propagation so you don't want header/menu clicks to trigger anim
+        e.stopPropagation();
+      });
+
+    });
+  </script>
+
+
+
+</body>
+
+</html>
