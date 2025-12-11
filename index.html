@@ -109,7 +109,8 @@
       width: 100%;
       height: 100%;
       z-index: 1;
-      pointer-events: auto; /* allows to reg clicks keyframe for js script */
+      pointer-events: auto;
+      /* allows to reg clicks keyframe for js script */
     }
 
 
@@ -121,21 +122,56 @@
       text-align: center;
     }
 
+    /* Animated soft RGB border + glow */
     .team-member img {
       aspect-ratio: 1 / 1;
-      border-radius: 50%; /* CIRCLE the imgs*/
+      border-radius: 50%;
       object-fit: cover;
       background: #1a1a1a;
-      border: 2px solid rgba(0, 255, 170, 0.3);
-      width: 80%; /* smaller image relative to card */
+      width: 80%;
       margin: 0 auto;
       display: block;
       max-width: 200px;
-    max-height: 200px;
+      max-height: 200px;
+
+      /* REMOVE your old border */
+      border: none;
+
+      /* NEW: glowing gradient border */
+      padding: 6px;
+      /* thickness of border */
+      background: linear-gradient(135deg,
+          rgba(255, 0, 120, 0.6),
+          rgba(0, 140, 255, 0.6),
+          rgba(0, 255, 170, 0.6),
+          rgba(255, 200, 0, 0.6));
+      background-size: 300% 300%;
+      animation: borderGlow 3s ease infinite;
+
+      /* soft glow */
+      box-shadow: 0 0 20px rgba(0, 255, 170, 0.15),
+        0 0 40px rgba(0, 255, 170, 0.08);
     }
 
+    /* animate RGB flow */
+    @keyframes borderGlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+
     .team-member-header {
-      font-size: 28px !important; /* smaller title !!!!!!!!!!!TO BE CHANGED!!!!!!!!!!!*/
+      font-size: 28px !important;
+      /* smaller title !!!!!!!!!!!TO BE CHANGED!!!!!!!!!!!*/
       margin-bottom: 20px;
     }
 
@@ -146,7 +182,7 @@
     }
 
     .activity-box {
-      background: #111;
+      background: #444444;
       /* border: 1px solid rgba(0, 255, 170, 0.35); */
       border-radius: 16px;
       padding: 16px;
@@ -155,7 +191,8 @@
       flex-direction: column;
       justify-content: space-between;
       width: 80%;
-      max-height: 390px; /* limit max height !!!!!!!!!TO BE CHANGED!!!!!!!! */
+      max-height: 390px;
+      /* limit max height !!!!!!!!!TO BE CHANGED!!!!!!!! */
     }
 
     .activity-box img {
@@ -170,7 +207,8 @@
 
     .team-grid {
       display: flex;
-      gap: 20px; /* reduce spacing between cards */
+      gap: 20px;
+      /* reduce spacing between cards */
       justify-content: center;
     }
 
@@ -180,8 +218,9 @@
     }
 
     .team-section {
-      background: darkslategrey;
-      padding: 40px 10% !important; /* smaller top/bottom */
+      background: #444444;
+      padding: 40px 10% !important;
+      /* smaller top/bottom */
     }
 
     /* Activity Section Styling */
@@ -233,8 +272,9 @@
 
     .main-footer {
       width: 100%;
-      background: #000;
-      color: #c4ffc9; /* soft green text */
+      background: #444444;
+      color: #c4ffc9;
+      /* soft green text */
       text-align: center;
       padding: 40px 0;
       font-size: 18px;
@@ -259,7 +299,8 @@
     .activity-video {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* NEEDED FOR SCALING */
+      object-fit: cover;
+      /* NEEDED FOR SCALING */
       border-radius: 18px;
     }
 
@@ -288,6 +329,7 @@
     }
 
     .activity-wrapper {
+      backdrop-filter: blur(3px);
       background:
         linear-gradient(217deg, rgb(101 255 0), rgb(209 117 117 / 0%) 50.71%),
         linear-gradient(127deg, rgb(36 0 255), rgba(255, 255, 255, 0) 70.71%),
@@ -318,8 +360,95 @@
 
     .activity-section,
     .activity-more {
-      background: transparent;
+      background: #000000b5;
       padding-bottom: 60px;
+    }
+
+    /* ensure the row stretches both columns to the same height */
+    .split-activity {
+      display: flex;
+      width: 100%;
+      gap: 20px;
+      padding: 10vh 0;
+      align-items: stretch;
+      /* <--- key change */
+      background: #000000b5;
+    }
+
+    /* columns center horizontally but stretch vertically */
+    .split-activity .left-side,
+    .split-activity .right-side {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* centers content, column itself stretches because parent uses align-items:stretch */
+    }
+
+    /* video container fills column height while keeping aspect ratio */
+    .video-preview {
+      width: 90%;
+      height: 100%;
+      /* fill available column height */
+      max-height: calc(100vh - 220px);
+      /* optional ceiling so it doesn't blow out on very tall screens */
+      aspect-ratio: 16 / 9;
+      /* maintain 16:9 */
+      border-radius: 18px;
+      background: #000;
+      border: 2px solid rgba(0, 255, 170, 0.25);
+      box-shadow: 0 0 22px rgba(0, 255, 170, 0.1);
+      overflow: hidden;
+    }
+
+    /* video fills the container fully */
+    .activity-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    /* text box fills the same height as the video */
+    .text-box {
+      width: 90%;
+      height: 90%;
+      /* <--- match video height */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      /* keeps PDF button at bottom if you want */
+      background: #444444;
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* small-screen fallback: stack columns */
+    @media (max-width: 900px) {
+      .split-activity {
+        flex-direction: column;
+        padding: 6vh 0;
+        gap: 18px;
+      }
+
+      .video-preview,
+      .text-box {
+        width: 96%;
+        height: auto;
+        aspect-ratio: auto;
+      }
+    }
+
+    .text-box p {
+      font-size: 20px;
+      text-align: justify;
+      line-height: 1.55;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
     }
   </style>
 </head>
@@ -328,18 +457,19 @@
 
   <!-- HEADER -->
   <header>
-    <h2>PlugedOUT</h2>
+    <h2 id="brand-title">Pluged IN</h2>
+
     <div class="menu">
-      <span>Team</span>
-      <span>Module</span>
-      <span>Activity</span>
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
+      <span data-scroll="team">Team</span>
+      <span data-scroll="activity1">Activity 1</span>
+      <span data-scroll="activities">2</span>
+      <span data-scroll="activities">3</span>
+      <span data-scroll="activities">4</span>
+      <span data-scroll="activities">5</span>
+      <span data-scroll="activities">6</span>
     </div>
   </header>
+
 
   <!-- FULLSCREEN HERO LOTTIE -->
   <section class="hero">
@@ -347,29 +477,29 @@
   </section>
 
   <!-- TEAM -->
-  <section class="team-section">
+  <section class="team-section" id="team">
     <h3 class="team-member-header">Team Members</h3>
 
     <div class="team-grid">
       <div class="team-member">
         <img src="assets/doax.jpg" />
-        <p>Name & Role</p>
+        <p>Alexandra Kyriakou</p>
       </div>
       <div class="team-member">
         <img src="assets/dexter1.jpg" />
-        <p>Name & Role</p>
+        <p>Anton Satsuk</p>
       </div>
       <div class="team-member">
         <img src="assets/cat3.jpg" />
-        <p>Name & Role</p>
+        <p>Layla Alwahabi</p>
       </div>
       <div class="team-member">
         <img src="assets/cat1.jpg" />
-        <p>Name & Role</p>
+        <p>Osvaldo Catine Junior</p>
       </div>
       <div class="team-member">
         <img src="assets/cat2.jpg" />
-        <p>Name & Role</p>
+        <p>Walid Alwahabi</p>
       </div>
     </div>
   </section>
@@ -378,26 +508,52 @@
   <div class="activity-wrapper">
 
     <!-- ACTIVITY 1 -->
-    <section class="activity-section" style="place-items: center;">
-      <h3>Activity 1: Problem Definition</h3>
-
-      <!-- VIDEO PLAYER BOX -->
-      <div class="video-preview">
-        <video controls class="activity-video">
-          <source src="assets/stok_vid.mp4" type="video/mp4">
-          Your browser does not support video playback.
-        </video>
+    <section class="activity-section split-activity" id="activity1">
+      <div class="left-side">
+        <div class="video-preview">
+          <video controls class="activity-video">
+            <source src="assets/stok_vid.mp4" type="video/mp4">
+            Your browser does not support video playback.
+          </video>
+        </div>
       </div>
 
-      <!-- PDF BUTTON -->
-      <a href="assets/problem-definition.pdf" class="pdf-button" download>
-        Problem Definition PDF
-      </a>
+      <div class="right-side">
+        <div class="text-box">
+          <h3>Activity 1: Problem Definition</h3>
+
+          <p>
+            In today’s gaming community, many players struggle with social interaction outside of online spaces. Gamers
+            often communicate through voice chat, matchmaking lobbies, or guilds, but these interactions rarely develop
+            into meaningful real-life connections. As a result, individuals may feel isolated despite being part of
+            large online communities. Our team identified this as the central problem — gamers do not socialize
+            effectively, and many lack opportunities to meet new people in person.
+
+            To solve this issue, we created PluggedOUT, a platform designed to connect gamers through real-world
+            activities and events. Any user can host or join activities, allowing people with similar interests to meet,
+            interact, and build friendships beyond the screen. These events can vary widely — from casual hangouts to
+            competitive matches. For example, a user could host a bowling night for Nintendo enthusiasts, where
+            participants compete for fun, socialize, and get to know each other. Others might host a Mario Bros gaming
+            session, a board game evening, or even a watch party for an upcoming eSports tournament. The goal is simple:
+            bring people together through shared experiences.
+
+            In the demonstration video, we showcased this idea by illustrating how individuals who previously struggled
+            to socialize were able to connect once they discovered PluggedOUT. One user hosted a Mario Bros game
+            session, and through the platform, people who were once disconnected and shy came together, interacted
+            naturally, and formed new friendships.
+          </p>
+
+          <a href="assets/problem-definition.pdf" class="pdf-button" download>
+            Problem Definition PDF
+          </a>
+        </div>
+      </div>
     </section>
 
 
+
     <!-- ACTIVITY 2–6 -->
-    <section class="activity-more">
+    <section class="activity-more" id="activities">
       <h3>Activities 2–6</h3>
 
       <div class="activities-grid">
@@ -455,7 +611,7 @@
       renderer: 'svg',
       loop: false,
       autoplay: true,
-      path: 'assets/lottie7.json'
+      path: 'assets/lottie10.json'
     });
 
     anim.addEventListener("data_ready", () => {
@@ -472,7 +628,7 @@
           if (nextSection) {
             nextSection.scrollIntoView({ behavior: "smooth" });
           }
-        }, 1000); // basically 1 second delay
+        }, 200); // basically 1 second delay
       });
 
       console.log("lottie: totalFrames =", totalFrames);
@@ -509,6 +665,8 @@
         if (window.hasPaused) {
           anim.play();
           window.hasPaused = false;
+          // CHANGE TITLE ON CLICK
+          document.getElementById("brand-title").textContent = "PlugedOUT";
           console.log("Animation resumed by click");
         } else {
           console.log("Clicked but animation wasn't paused");
@@ -517,6 +675,14 @@
         e.stopPropagation();
       });
 
+    });
+
+    document.querySelectorAll(".menu span").forEach(item => {
+      item.addEventListener("click", () => {
+        const target = item.getAttribute("data-scroll");
+        const element = document.getElementById(target);
+        if (element) element.scrollIntoView({ behavior: "smooth" });
+      });
     });
   </script>
 
